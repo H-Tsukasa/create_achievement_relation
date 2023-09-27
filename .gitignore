@@ -1,0 +1,9 @@
+.ipynb_checkpoints
+__pycache__
+checkpoints
+figs
+test_results
+use_data
+*.ipynb
+document_summarization
+datas
