@@ -14,7 +14,7 @@ torch==1.13.0
 torchvision==0.14.0 
 torchaudio==0.13.0
 ```
-#### 構成
+## 構成
 ```
 ├── datas
 │   ├── neg_datas #正例データ
@@ -55,10 +55,10 @@ torchaudio==0.13.0
 文章が目的を含むかどうか分類するBERTを学習するフォルダ
 - t5_purpose_abstraction  
 目的を含む文章を入力すると，抽象化された目的を返すt5を学習するフォルダ．
-#### 準備
+## 準備
 requirements.txtのライブラリをインストール．
 ```
 pip install -r requirements.txt
 ```
-#### 実行
+## 実行
 各フォルダに使い方を掲載．
