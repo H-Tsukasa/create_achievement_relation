@@ -1,6 +1,7 @@
 # csv等から読み込んだデータを格納するためのクラス
 class InputExample(object):
     """A single training/test example for token classification."""
+
     def __init__(self, guid, text_a, text_b, label):
         """Constructs a InputExample.
         Args:
@@ -18,9 +19,11 @@ class InputExample(object):
         # 分類ラベル
         self.label = label
 
+
 # BERTへの入力形式（id列）に変換されたデータを格納するためのクラス
 class InputFeatures(object):
     """A single set of features of data."""
+
     def __init__(self, token_ids, mask_ids, segment_ids, label):
         self.token_ids = token_ids
         self.mask_ids = mask_ids
