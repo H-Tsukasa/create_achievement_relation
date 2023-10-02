@@ -7,7 +7,7 @@ import pandas as pd
 import torch
 import transformers
 from lib.data_processing import load_and_cache_examples
-from lib.evaluation import test_prediction, model_load_checkpoint
+from lib.evaluation import model_load_checkpoint, test_prediction
 from lib.SequenceClassification import SequenceClassification
 from torch.utils.data import DataLoader
 
