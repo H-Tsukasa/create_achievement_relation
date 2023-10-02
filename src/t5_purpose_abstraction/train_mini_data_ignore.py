@@ -2,6 +2,7 @@ from pathlib import Path
 import re
 import math
 import time
+import random
 import demoji
 import mojimoji
 import copy
@@ -15,6 +16,8 @@ from tqdm import tqdm
 from transformers import T5ForConditionalGeneration, T5Tokenizer
 from sklearn.model_selection import train_test_split
 
+random.seed(42)
+
 MODEL_NAME = "sonoisa/t5-base-japanese"
 tokenizer = T5Tokenizer.from_pretrained(MODEL_NAME, is_fast=True)
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -24,6 +27,8 @@ batch_size_train = 8
 batch_size_valid = 8
 epochs = 1000
 patience = 10
+
+data_num = 1.5
 
 def text_revise(text):
     text = text.replace('\n','').replace('\r','') #改行削除
@@ -159,6 +164,13 @@ purpose_texts = [text_revise(purpose_text) for purpose_text in purpose_texts]
 use_datas = list(zip(purposes, purpose_texts))
 
 X_train, X_test, y_train, y_test = train_test_split(purpose_texts, purposes, test_size=0.2, random_state=1)
+
+#データ数制限
+X_train = random.sample(X_train, int(len(X_train)/data_num))
+y_train = random.sample(y_train, int(len(y_train)/data_num))
+X_test = random.sample(X_test, int(len(X_test)/data_num))
+y_test = random.sample(y_test, int(len(y_test)/data_num))
+
 train_data = [(src, tgt) for src, tgt in zip(X_train, y_train)]
 valid_data = [(src, tgt) for src, tgt in zip(X_test, y_test)]
 

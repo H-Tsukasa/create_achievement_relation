@@ -50,15 +50,14 @@ load_val_file_name = 'val.csv'
 load_test_file_name = 'test.csv'
 
 ### 学習に関する変数 ###
-pretrained_path = 'cl-tohoku/bert-base-japanese-v3'
+pretrained_path = 'cl-tohoku/bert-base-japanese-whole-word-masking'
 tokenizer = transformers.BertJapaneseTokenizer.from_pretrained(pretrained_path)
 batch_size = 2
 
 ### checkpointに関する変数 ###
-save_checkpoint_dir = './checkpoints'
+save_checkpoint_dir = './checkpoints_v1'
 checkpoint_name = 'bert_fine_tuning_checkpoint_for_binary_classification'
 checkpoint_path = os.path.join(save_checkpoint_dir, "{}".format(checkpoint_name + '.pt'))
-
 
 ### 準備 ###
 if torch.cuda.is_available():
@@ -106,13 +105,12 @@ skip_reviews = random.sample(skip_reviews, len(purpose_texts))
 
 cor_list =["目的"] * len(purpose_texts)
 incor_list = ["非目的"] * len(skip_reviews)
+len(incor_list)
 
 df_list = list(zip(purpose_texts, cor_list))
 df_list += list(zip(skip_reviews, incor_list))
 texts = [text[0] for text in df_list]
 labels = [text[1] for text in df_list]
-
-print(len(texts))
 
 
 X_train, X_test, y_train, y_test = train_test_split(texts, labels, test_size=0.2, random_state=1, stratify=labels)
@@ -187,7 +185,7 @@ for name, param in model.classifier.named_parameters():
     param.requires_grad = True
     
 # チェックポイントの作成
-make_folder('./', 'checkpoints')
+make_folder('./', 'checkpoints_v1')
 
 ### 訓練開始 ###
 fine_tuning(model=model,

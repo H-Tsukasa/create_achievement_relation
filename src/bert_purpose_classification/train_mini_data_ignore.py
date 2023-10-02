@@ -54,10 +54,14 @@ pretrained_path = 'cl-tohoku/bert-base-japanese-v3'
 tokenizer = transformers.BertJapaneseTokenizer.from_pretrained(pretrained_path)
 batch_size = 2
 
+### 追加：利用するデータ数 ###
+data_num = 4
+
 ### checkpointに関する変数 ###
-save_checkpoint_dir = './checkpoints'
+save_checkpoint_dir = f'./checkpoints_{data_num}'
 checkpoint_name = 'bert_fine_tuning_checkpoint_for_binary_classification'
 checkpoint_path = os.path.join(save_checkpoint_dir, "{}".format(checkpoint_name + '.pt'))
+
 
 
 ### 準備 ###
@@ -107,16 +111,22 @@ skip_reviews = random.sample(skip_reviews, len(purpose_texts))
 cor_list =["目的"] * len(purpose_texts)
 incor_list = ["非目的"] * len(skip_reviews)
 
+print(len(incor_list))
+
 df_list = list(zip(purpose_texts, cor_list))
 df_list += list(zip(skip_reviews, incor_list))
 texts = [text[0] for text in df_list]
 labels = [text[1] for text in df_list]
 
-print(len(texts))
-
-
 X_train, X_test, y_train, y_test = train_test_split(texts, labels, test_size=0.2, random_state=1, stratify=labels)
 X_valid, X_test, y_valid, y_test = train_test_split(X_test, y_test, test_size=0.5, random_state=1, stratify=y_test)
+
+#データ数制限
+X_train = random.sample(X_train, int(len(X_train)/data_num))
+y_train = random.sample(y_train, int(len(y_train)/data_num))
+X_valid = random.sample(X_valid, int(len(X_valid)/data_num))
+y_valid = random.sample(y_valid, int(len(y_valid)/data_num))
+
 
 # これらのリストをpandasのDataFrameに格納
 # 訓練データ
@@ -187,7 +197,7 @@ for name, param in model.classifier.named_parameters():
     param.requires_grad = True
     
 # チェックポイントの作成
-make_folder('./', 'checkpoints')
+make_folder('./', f'checkpoints_{data_num}')
 
 ### 訓練開始 ###
 fine_tuning(model=model,

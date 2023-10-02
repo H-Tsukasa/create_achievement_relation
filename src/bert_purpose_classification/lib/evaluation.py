@@ -103,8 +103,8 @@ def test_prediction(model=None,
             if batch_processed_num % 10 == 0 and batch_processed_num != 0:
                 print('Processed : ', batch_processed_num * batch_size)
     # 正解率の計算
-    epoch_acc = epoch_corrects.double() / (len(test_dataloader.dataset))
-    print('正解率', epoch_acc.item())
+    # epoch_acc = epoch_corrects.double() / (len(test_dataloader.dataset))
+    # print('正解率', epoch_acc.item())
     '''
     帰値をまとめる-----------------------------------------------------
     '''

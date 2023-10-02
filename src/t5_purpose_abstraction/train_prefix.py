@@ -142,7 +142,6 @@ purpose_texts = []
 purposes = []
 purpose_pairs = []
 for f in file:
-  # print(f)
   with open(f, "r") as f:
     for i, line in enumerate(f.readlines()):
       if not i == 13 and not i == 27:
@@ -155,6 +154,7 @@ for f in file:
               purpose_pairs.append((split_line[3+j-1], s))
               
 purposes = [text_revise(purpose) for purpose in purposes]
+purposes = ["要約:「"+purpose+"」の目的は" for purpose in purposes]
 purpose_texts = [text_revise(purpose_text) for purpose_text in purpose_texts]
 use_datas = list(zip(purposes, purpose_texts))
 
@@ -200,11 +200,11 @@ for loop in range(1, epochs + 1):
         counter += 1
 
 ###モデルの保存
-path = './model'
+path = './model_prefix'
 if not os.path.exists(path):
     os.makedirs(path)
 
-model_dir_path = Path('model')
+model_dir_path = Path('model_prefix')
 if not model_dir_path.exists():
     model_dir_path.mkdir(parents=True)
 

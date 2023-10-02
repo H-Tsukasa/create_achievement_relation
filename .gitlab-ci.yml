@@ -1,0 +1,13 @@
+stages:
+  - linting
+
+linting:
+  stage: linting
+  image: python:3.8.5
+  script:
+    - pip install -U 'pysen[lint]==0.10.2'
+    - bash -c "if [ $(pysen run format 2>&1 | grep -E '^(Fixing|reformatted)' | wc -l | sed -e 's/^[ \t]*//' | sed -e 's/[ \t]*$//') -ne 0 ]; then exit 1; fi"
+    - pysen run lint
+  only:
+    - main
+    - master
