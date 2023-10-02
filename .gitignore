@@ -10,7 +10,8 @@ test_results
 model
 model_prefix
 
-datas/*
+datas/neg_datas/*
+datas/pos_datas/*
 !test.txt
 
 *_ignore
