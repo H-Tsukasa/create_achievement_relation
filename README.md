@@ -1,5 +1,5 @@
-# purpose_extraction
-このレポジトリでは，言語モデルを用いて目的を抽出，抽象化するコードをまとめています．
+# create_achievement_relation
+このレポジトリでは，言語モデルを用いて目的を抽出，抽象化するコードと，アチーブメント関係を抽出する手法をまとめています．
 ## 開発環境
 #### バージョン
 - Ubuntu 22.04.3 LTS
@@ -48,6 +48,11 @@ torchaudio==0.13.0
         ├── train.py #t5の学習
         └── use_data
             └── purposes.txt
+    └── create_acheivement
+        ├── convert_vec.py
+        ├── grouping_by_sbert.py
+        ├── purpose_abstraction.py
+        └── purpose_extraction.py
 ```
 - datas  
 学習に利用する目的を含む正例データ，目的を含まない負例データを格納
